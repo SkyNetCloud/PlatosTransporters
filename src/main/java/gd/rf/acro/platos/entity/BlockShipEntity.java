@@ -6,17 +6,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.MovementController;
-import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -24,21 +16,24 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.animal.Pig;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.server.ServerWorld;
 
-import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class BlockShipEntity extends PigEntity {
-    public BlockShipEntity(EntityType<? extends BlockShipEntity> entityType, World world) {
+public class BlockShipEntity extends Pig {
+    public BlockShipEntity(EntityType<? extends BlockShipEntity> entityType, Level world) {
         super(entityType, world);
     }
 
@@ -58,9 +53,9 @@ public class BlockShipEntity extends PigEntity {
 
     @Override
     public float getAIMoveSpeed() {
-        if(this.getControllingPassenger() instanceof  PlayerEntity)
+        if(this.getControllingPassenger() instanceof Player)
         {
-            if(((PlayerEntity) this.getControllingPassenger()).getHeldItemMainhand().getItem()== PlatosTransporters.CONTROL_KEY_ITEM)
+            if(((Player) this.getControllingPassenger()).getMainHandItem().getItem() == PlatosTransporters.CONTROL_KEY_ITEM)
             {
                 float cspeed = Float.parseFloat(ConfigUtils.config.getOrDefault("cspeed","0.2"));
                 float nspeed = Float.parseFloat(ConfigUtils.config.getOrDefault("nspeed","0.05"));

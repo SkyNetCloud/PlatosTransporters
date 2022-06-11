@@ -1,19 +1,11 @@
 package gd.rf.acro.platos;
 
 import gd.rf.acro.platos.entity.BlockShipEntity;
-import gd.rf.acro.platos.network.MoveMessage;
-import gd.rf.acro.platos.network.NetworkHandler;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.Heightmap;
-import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 

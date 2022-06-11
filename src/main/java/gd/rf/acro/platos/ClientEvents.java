@@ -3,7 +3,6 @@ package gd.rf.acro.platos;
 import gd.rf.acro.platos.network.MoveMessage;
 import gd.rf.acro.platos.network.NetworkHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;

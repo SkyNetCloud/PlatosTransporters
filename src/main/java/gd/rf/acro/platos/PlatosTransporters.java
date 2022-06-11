@@ -7,23 +7,24 @@ import gd.rf.acro.platos.entity.BlockShipEntityRenderer;
 import gd.rf.acro.platos.items.*;
 import gd.rf.acro.platos.network.NetworkHandler;
 import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.InputMappings;
 import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -31,6 +32,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.tags.ITag;
 import org.lwjgl.glfw.GLFW;
 
 import static net.minecraft.client.resources.I18n.format;
@@ -38,21 +40,21 @@ import static net.minecraft.client.resources.I18n.format;
 @Mod(value = PlatosTransporters.MODID)
 public class PlatosTransporters{
 	public static final String MODID = "platos";
-	public static final ItemGroup TAB = ItemGroup.MISC;
-	public static KeyBinding SHIP_UP;
-	public static KeyBinding SHIP_DOWN;
-	public static KeyBinding SHIP_STOP;
+	public static final CreativeModeTab TAB = CreativeModeTab.TAB_MISC;
+	public static KeyMapping SHIP_UP;
+	public static KeyMapping SHIP_DOWN;
+	public static KeyMapping SHIP_STOP;
 
 	
 	public static final EntityType<BlockShipEntity> BLOCK_SHIP_ENTITY_ENTITY_TYPE = createEntity("block_ship",BlockShipEntity::new,1,1);
 
-	public static final ITag.INamedTag BOAT_MATERIAL = BlockTags.makeWrapperTag("platos:boat_material");
-	public static final ITag.INamedTag BOAT_MATERIAL_BLACKLIST = BlockTags.makeWrapperTag("platos:boat_material_blacklist");
-	public static final ITag.INamedTag SCYTHEABLE = BlockTags.makeWrapperTag("platos:scytheable");
+	public static final ITag BOAT_MATERIAL = BlockTags.makeWrapperTag("platos:boat_material");
+	public static final ITag BOAT_MATERIAL_BLACKLIST = BlockTags.makeWrapperTag("platos:boat_material_blacklist");
+	public static final ITag SCYTHEABLE = BlockTags.makeWrapperTag("platos:scytheable");
 
 
 
-	private static <T extends AnimalEntity> EntityType<T> createEntity(String name, EntityType.IFactory<T> factory, float width, float height) {
+	private static <T extends Animal> EntityType<T> createEntity(String name, EntityType.Builder<T> factory, float width, float height) {
 		ResourceLocation location = new ResourceLocation("platos", name);
 		EntityType<T> entity = EntityType.Builder.create(factory, EntityClassification.CREATURE).size(width, height).setTrackingRange(64).setUpdateInterval(1).build(location.toString());
 		entity.setRegistryName(location);
@@ -75,7 +77,7 @@ public class PlatosTransporters{
 
 
 	}
-	private static KeyBinding registerKeybinding(KeyBinding key) {
+	private static KeyMapping registerKeybinding(KeyMapping key) {
 		ClientRegistry.registerKeyBinding(key);
 		return key;
 	}
@@ -85,7 +87,7 @@ public class PlatosTransporters{
 		RenderingRegistry.registerEntityRenderingHandler(PlatosTransporters.BLOCK_SHIP_ENTITY_ENTITY_TYPE, BlockShipEntityRenderer::new);
 
 
-		SHIP_UP = registerKeybinding(new KeyBinding("key.platos.up", GLFW.GLFW_KEY_Z, "category.platos.main"));
+		SHIP_UP = registerKeybinding(new KeyMapping("key.platos.up", GLFW.GLFW_KEY_Z, "category.platos.main"));
 		SHIP_DOWN = registerKeybinding(new KeyBinding("key.platos.down", GLFW.GLFW_KEY_C, "category.platos.main"));
 		SHIP_STOP = registerKeybinding(new KeyBinding("key.platos.stop", GLFW.GLFW_KEY_V, "category.platos.main"));
 
@@ -155,7 +157,7 @@ public class PlatosTransporters{
 
 	public static Item registerItem(Item item, String name)
 	{
-		item.setRegistryName(name);
+		//item.setRegistryName(name);
 		ForgeRegistries.ITEMS.register(item);
 		return item;
 	}

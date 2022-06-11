@@ -1,7 +1,6 @@
 package gd.rf.acro.platos.network;
 
 import gd.rf.acro.platos.entity.BlockShipEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -15,7 +14,7 @@ import java.util.function.Supplier;
 public class MoveMessage {
     int state;
 
-    public MoveMessage(PacketBuffer packetBuffer) {
+    public MoveMessage(b packetBuffer) {
         state=packetBuffer.readInt();
     }
     public MoveMessage(int a)
